@@ -3,7 +3,7 @@ const boxen = require("boxen");
 
 class Greeting {
   print() {
-    const greeting = `${chalk.white.bold("Dead Code!")}
+    const greeting = `${chalk.white.bold("Dead File!")}
 
 Simply find the unused files in your javascript project.
 Press --help for help.`;
