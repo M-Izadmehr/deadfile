@@ -1,7 +1,7 @@
 {
   "name": "deadcode",
   "version": "0.0.1",
-  "description": "A library used to find the unused files and libraries in a JavaScript project",
+  "description": "Simple util to find unused files in any JavaScript project (ES5, ES6, React, Vue, ...)",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
