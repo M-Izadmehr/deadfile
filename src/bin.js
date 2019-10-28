@@ -3,7 +3,7 @@ const fs = require("fs");
 const Greeting = require("./cli/Greeting");
 const yargs = require("yargs");
 const inputOptions = require("./cli/options");
-const DeadCode = require("./");
+const DeadFile = require("./");
 
 // Greeting
 new Greeting().print();
@@ -20,7 +20,7 @@ with  exclude:         $0 ./src/index.js --exclude tests  utils/webpack
   )
   .options(inputOptions);
 
-new DeadCode(yargs.argv);
+new DeadFile(yargs.argv);
 
 if (yargs.argv.output) {
   console.log("yargs.argv: ", yargs.argv);

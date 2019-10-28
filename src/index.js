@@ -2,7 +2,7 @@ const UsedAssets = require("./handlers/UsedAssets");
 const AllAssets = require("./handlers/AllAssets");
 const Logger = require("./cli/Logger");
 const _pickBy = require("lodash/pickBy");
-class DeadCode {
+class DeadFile {
   constructor(argv) {
     const { _: entry, dir, exclude } = argv;
     this.entry = entry; // entry file
@@ -49,9 +49,9 @@ class DeadCode {
 //   EXCL: [""],
 //   exclude: [""],
 //   excl: [""],
-//   $0: "deadcode"
+//   $0: "deadfile"
 // };
-// const response = new DeadCode(argv);
+// const response = new DeadFile(argv);
 // console.log("response: ", response);
 
-module.exports = DeadCode;
+module.exports = DeadFile;
