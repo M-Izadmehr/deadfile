@@ -1,12 +1,19 @@
 import React from 'react';
-import Child from './File'
 
-class Comp extends React.Component {
+class Parent extends React.Component {
+    state = {
+        Child: 'Loading...'
+    }
+    import('./Child')
+        .then(Child=> this.setState({Child.default}))
+        .catch((err)=>this.setState({Child:err.message}))
+
     render(){
         <div>
-            <Child/>
+            <img src={require('./image.png')}/>
+            <this.state.Child/>
         </div>
     }
 }
 
-export default Comp
+export default Parent
