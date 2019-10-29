@@ -1,4 +1,4 @@
-<img src="images/logo.png" alt="deadfile" width="120"/>
+<img src="images/icon.png" alt="deadfile" width="120"/>
 
 
 # **docsify** <small>3.5</small>
