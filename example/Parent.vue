@@ -1,13 +1,13 @@
 <template>
-    <Child></Child>
+    <child></child>
 </template>
 
 <script>
-import Child from './Child';
+import child from './Child';
 
 export default {
   components: {
-    Child
+    child
   }
 }
 </script>

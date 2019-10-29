@@ -9,7 +9,7 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 * Shows you a warning for the node_modules you import, but do not appear in your package.json (for example, react in image below)
 
 
-![deadfile result](./images/screenshot.svg "Code Analysis")
+![deadfile result](./images/screenshot.png "Code Analysis")
 
 
 ## Installation
@@ -61,10 +61,10 @@ Also the following export (aggregation) syntaxes are also supported:
 You can use `deadfile` for any JavaScript project, and go crazy with you code, use the latest features and it still works. Here are some examples:
 
 #### JSX
-![React Example](./images/React.svg "React Example")
+![React Example](./images/React.png "React Example")
 
 ### Vue
-![Vue Example](./images/Vue.svg "Vue Example")
+![Vue Example](./images/Vue.png "Vue Example")
 
 #### Reassigned requires
 
