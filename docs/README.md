@@ -1,6 +1,4 @@
-<img src="images/icon.png" alt="deadfile" width="100"/>
-
-# deadfile
+# <img src="images/icon.png" alt="deadfile" width="35"/> deadfile
 
 Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...).
 

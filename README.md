@@ -1,4 +1,4 @@
-<img src="./docs/images/icon.png" alt="deadfile" width="100"/>
+<img src="https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/logo.png" alt="deadfile" width="100"/>
 
 # deadfile
 

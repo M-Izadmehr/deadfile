@@ -1,7 +1,7 @@
 <img src="images/icon.png" alt="deadfile" width="120"/>
 
 
-# **docsify** <small>3.5</small>
+# **DeadFile** <small>0.6</small>
 
 > Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...).
 
