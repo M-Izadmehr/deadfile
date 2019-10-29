@@ -2,3 +2,4 @@
 * allow file extensions for parsing, should default to (.js/.jsx/.ts/.tsx)
 
 * Add SASS import
+* check compatibility with vue
