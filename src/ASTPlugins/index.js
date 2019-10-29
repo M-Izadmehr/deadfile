@@ -1,51 +1,13 @@
-/* eslint-disable no-underscore-dangle */
-const { tokTypes } = require("acorn");
-const { ImportUsingExportKey } = require("../models/Types");
+let Parser = require("acorn-loose");
+let ParserWalk = require("acorn-walk");
 
-/**
- * This function is used to parse imports using export
- * ```js
- *  export * from './a';
- *  export * as name1 from './a';
- *  export { name1, name2, nameN } from './a';
- *  export { import1 as name1, import2 as name2, nameN } from './a';
- *  export { default } from './a';
- * ```
- */
-function parseImportUsingExport() {
-  var node = this.startNode();
+const parseImportFromExport = require("./parseImportFromExport");
+const parseJsx = require("./parseJsx");
+const injectImportUsingExportWalk = require("./walk");
 
-  while (this.tok.value !== "from") {
-    this.next(); // skip `export` to find `from`
-  }
-  this.next(); // skip `from` to find `path`
+Parser = Parser.LooseParser.extend(parseImportFromExport);
+ParserWalk = injectImportUsingExportWalk(ParserWalk);
 
-  node.source = this.tok;
-  node.type = ImportUsingExportKey;
-  return this.finishNode(node, ImportUsingExportKey);
-}
+const ParserWithJsx = entry => Parser.parse(parseJsx(entry));
 
-function isImportUsingExport() {
-  const checkInput = /export.*from/.test(this.input);
-  const checkType = this.tok.type === tokTypes._export;
-  return checkInput && checkType;
-}
-
-function ParserExtension(Parser) {
-  return class extends Parser {
-    parseStatement(context, topLevel, exports) {
-      // used to enable features such as dynamic import
-      this.options.ecmaVersion = 20;
-
-      // check export from statements
-      if (isImportUsingExport.call(this)) {
-        return parseImportUsingExport.call(this);
-      }
-
-      return super.parseStatement(context, topLevel, exports);
-    }
-  };
-}
-
-module.exports = ParserExtension;
-module.exports.ImportUsingExportKey = ImportUsingExportKey;
+module.exports = { Parser: ParserWithJsx, ParserWalk };

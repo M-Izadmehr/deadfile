@@ -25,7 +25,7 @@ function resolve(relPath = "", currentFile = "") {
     const isNodeModule = checkNodeModules(absPath);
     resolved = { absPath, isNodeModule };
   } catch (err) {
-    return {};
+    return console.log(err.message);
   }
   return resolved;
 }

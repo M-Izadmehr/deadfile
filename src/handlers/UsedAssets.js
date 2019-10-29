@@ -1,18 +1,13 @@
-const { resolve } = require("./fileResolver");
 const fs = require("fs");
 const ora = require("ora");
-
-const path = require("path");
-const parseImportFromExport = require("../ASTPlugins");
+const { resolve } = require("./fileResolver");
 const isParsable = require("../ASTPlugins/isParsable");
-const injectImportUsingExportWalk = require("../ASTPlugins/walk");
 const {
   callExpressionHandler,
   propertyHandler
 } = require("../ASTPlugins/isRequire");
 
-let Parser = require("acorn-loose");
-let ParserWalk = require("acorn-walk");
+let { Parser, ParserWalk } = require("../ASTPlugins");
 
 // Models
 const Source = require("../models/Source");
@@ -24,9 +19,6 @@ const {
   Property
 } = require("../models/Types");
 
-// Initializations
-Parser = Parser.LooseParser.extend(parseImportFromExport);
-ParserWalk = injectImportUsingExportWalk(ParserWalk);
 class UsedAssets {
   constructor(argv, onComplete) {
     this.entry = argv.entry; // array of entry files
@@ -37,12 +29,7 @@ class UsedAssets {
     this.visited = new Set(); // the list of visited files
     this.onComplete = onComplete; // method called when process is finished
 
-    // if the entry is not absolute find the absolute
-    this.entry = this.entry.map(entry =>
-      path.isAbsolute(entry) ? entry : path.resolve(this.baseDir, entry)
-    );
     this.entry.forEach(entry => this.updateSources(entry));
-
     this.spinner = ora("Counting imported assets");
   }
 
@@ -56,13 +43,14 @@ class UsedAssets {
    * @param {String} entry
    */
   parseFile(entry) {
-    fs.readFile(entry, (err, file) => {
+    fs.readFile(entry, "utf8", (err, file) => {
       if (err) {
         console.log("err: ", err.message);
+        this.spinner.fail(err.message);
         return;
       }
       this.currentFile = entry;
-      const parsed = Parser.parse(file);
+      const parsed = Parser(file);
 
       this.spinner.text = `${this.sources.size} imported assets found. ${entry} `;
 
@@ -105,6 +93,7 @@ class UsedAssets {
     if (!relPath) return;
     try {
       const resolved = resolve(relPath, this.currentFile);
+      if (!resolved) return;
 
       const source =
         this.sources.get(resolved.absPath) || new Source(this.baseDir);
