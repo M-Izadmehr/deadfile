@@ -14,7 +14,7 @@ class DeadFile {
     this.exclude = exclude; // excluded files/folders
     this.allAssets = AllAssets(dir, { exclude }); // Array
     new UsedAssets(
-      { entry: this.entry, dir: this.baseDir },
+      { entry: this.entry, dir: this.baseDir, exclude: this.exclude },
       this.setUsedAssets.bind(this)
     ).start(); // Map
   }
@@ -62,12 +62,12 @@ class DeadFile {
 /**
  * TESTING
  */
-// const argv = {
-//   _: ["./exampale/index.js"],
-//   dir: "./example",
-//   exclude: [""]
-// };
-// const response = new DeadFile(argv);
-// console.log("response: ", response);
+const argv = {
+  _: ["./example/index.js"],
+  dir: "./example",
+  exclude: ["png"]
+};
+const response = new DeadFile(argv);
+console.log("response: ", response);
 
 module.exports = DeadFile;

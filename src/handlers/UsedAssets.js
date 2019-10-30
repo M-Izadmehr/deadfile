@@ -23,6 +23,8 @@ class UsedAssets {
   constructor(argv, onComplete) {
     this.entry = argv.entry; // array of entry files
     this.baseDir = argv.dir; // the entry path, used as a base route to search all files
+    this.exclude = argv.exclude; // excluded path
+
     this.currentFile = ""; // the current file which is getting parsed
     this.sources = new Map(); // the list of all found sources with some data
     this.taskQueue = new Set(); // the list of files which should be read
@@ -94,6 +96,12 @@ class UsedAssets {
     try {
       const resolved = resolve(relPath, this.currentFile);
       if (!resolved) return;
+
+      // if this file is excluded ignore it
+      const isExcluded = this.exclude.some(
+        exc => exc && new RegExp(exc).test(resolved)
+      );
+      if (isExcluded) return;
 
       const source =
         this.sources.get(resolved.absPath) || new Source(this.baseDir);
