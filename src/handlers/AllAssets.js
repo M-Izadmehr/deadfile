@@ -6,9 +6,7 @@ const { excludedAssets } = require("../models/Parsables");
 const walkSync = function(dir, fileList, exclude) {
   const name = path.basename(dir);
   // Do not search node_modules folder, or hidden paths (.git/.idea/.code)
-  const isExcluded = exclude.some(
-    excl => excl && new RegExp(`^${excl}`).test(name)
-  );
+  const isExcluded = exclude.some(excl => excl && new RegExp(excl).test(name));
   if (name === "node_modules" || name[0] === "." || isExcluded) {
     return fileList;
   }
@@ -43,13 +41,24 @@ const AllAssets = function(entry, options) {
     //if not a javascript file
     const fileName = path.basename(str);
 
-    const isExcluded = excludedAssets.some(ext =>
+    // check if one library excluded assets
+    const isExcludedLibrary = excludedAssets.some(ext =>
       new RegExp(`${ext}$`).test(fileName)
     );
 
-    if (isExcluded) {
+    if (isExcludedLibrary) {
       return false;
     }
+
+    // check if one of user excluded assets
+    const isExcludedUser = exclude.some(
+      exc => exc && new RegExp(exc).test(fileName)
+    );
+
+    if (isExcludedUser) {
+      return false;
+    }
+
     //ignore file with no name
     const name = path.basename(str);
     if (!name) {
