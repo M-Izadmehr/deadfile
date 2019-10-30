@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const fs = require("fs");
 const Greeting = require("./cli/Greeting");
 const yargs = require("yargs");
 const inputOptions = require("./cli/options");
@@ -21,8 +20,3 @@ with  exclude:         $0 ./src/index.js --exclude tests  utils/webpack
   .options(inputOptions);
 
 new DeadFile(yargs.argv);
-
-if (yargs.argv.output) {
-  console.log("yargs.argv: ", yargs.argv);
-  fs.writeFileSync("");
-}

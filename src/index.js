@@ -3,16 +3,18 @@ const AllAssets = require("./handlers/AllAssets");
 const Logger = require("./cli/Logger");
 const _pickBy = require("lodash/pickBy");
 const path = require("path");
+const WriteReportFile = require("./cli/WriteReportFile");
 class DeadFile {
   constructor(argv) {
-    const { _: entry, dir, exclude = [] } = argv;
-    // if dir is not absolute find based on pwd
-    this.baseDir = this.dirToAbs(dir);
-    // if the entry is not absolute find the absolute
-    this.entry = this.entryToAbs(entry, dir);
+    const { _: entry, dir, exclude = [], output } = argv;
 
+    this.baseDir = this.dirToAbs(dir); // if dir is not absolute find based on pwd
+    this.entry = this.entryToAbs(entry, dir); // if the entry is not absolute find the absolute
     this.exclude = exclude; // excluded files/folders
+    this.output = output;
+
     this.allAssets = AllAssets(dir, { exclude }); // Array
+
     new UsedAssets(
       { entry: this.entry, dir: this.baseDir, exclude: this.exclude },
       this.setUsedAssets.bind(this)
@@ -67,7 +69,13 @@ class DeadFile {
       importedNodeModules,
       importedButNotFoundInScope
     };
+
+    this.reporting(data);
+  }
+
+  reporting(data) {
     Logger(data, this.baseDir);
+    WriteReportFile(data, this.output);
   }
 }
 

@@ -8,10 +8,10 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 * Out of box support for ES5, ES6, React, Vue, ESM, CommonJs.
 * **Error tolerant:** deadfile uses loose parsing of your code, so if there are errors in your code, it still works. Even if you use some random babel config, it will parse your code and find imports.
 * **Syntax support:** it supports import/require and even dynamic import.
-* Shows you a warning for the node_modules you import, but do not appearing your package.json
+* Shows you a warning for the node_modules you import, but do not appearin your package.json
 
 
-![deadfile result](./images/screenshot.png "Code Analysis")
+![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/screenshot.png "Code Analysis")
 
 
 ## Installation
@@ -54,19 +54,19 @@ deadfile ./src/index.js --exclude tests  utils/webpack
 ## What it does
 ### Supported Syntaxes
 All major ES Module imports are supported (including dynamic import):
-![Import Syntax](./images/supportedImports.png "Import Syntax")
+![Import Syntax](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/supportedImports.png "Import Syntax")
 
 Also the following export (aggregation) syntaxes are also supported:
-![Export Aggregation Syntax](./images/supportedExports.png "Export Aggregation Syntax")
+![Export Aggregation Syntax](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/supportedExports.png "Export Aggregation Syntax")
 
 ### Development Environment
 You can use `deadfile` for any JavaScript project, and go crazy with you code, use the latest features and it still works. Here are some examples:
 
 #### JSX
-![React Example](./images/React.png "React Example")
+![React Example](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/React.png "React Example")
 
 ### Vue
-![Vue Example](./images/Vue.png "Vue Example")
+![Vue Example](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/Vue.png "Vue Example")
 
 #### Reassigned requires
 
@@ -85,10 +85,18 @@ deadfile <file> --dir /path/to/other/folder
 - **--exclude**: list of paths to ignore:
 
 Paths or files to exclude from search. It supports any valid RegExp expression to exclude:
-```
+``` bash
 deadfile <file> --exclude ^(\w)png$
 deadfile <file> --exclude webpack utils docs
 ```
+
+-**--output**: used to write report results in `.json` file
+
+You can specify the file to write, a json file including file lists:
+``` bash
+deadfile <file> --output report.json
+```
+
 
 ## Todo
 * handle reassigned require
