@@ -4,7 +4,14 @@ const moment = require("moment");
 const chalk = require("chalk");
 
 function logger(data, baseDir) {
-  const { unusedAssets, allAssets, usedAssets } = data;
+  const {
+    unusedAssets,
+    allAssets,
+    usedAssets,
+    importedNodeModules,
+    importedButNotFound,
+    importedButNotFoundInScope
+  } = data;
   const tableBody = Object.keys(unusedAssets).map((file, index) => {
     const ext = path.extname(file);
     const relPath = path.relative(baseDir, file);
@@ -42,6 +49,22 @@ function logger(data, baseDir) {
   );
   console.log(
     chalk.blue(usedAssets.size) + chalk.green(" imported ") + "files found!"
+  );
+  console.log(
+    chalk.blue(importedNodeModules.length) +
+      " separate imports from node_modules (and found in package.json)"
+  );
+  console.log(
+    chalk.blue(importedButNotFound.size) +
+      " assets imported but " +
+      chalk.red("not found") +
+      "."
+  );
+  console.log(
+    chalk.blue(importedButNotFoundInScope.length) +
+      " assets imported but " +
+      chalk.red("not found") +
+      " in search scope."
   );
 }
 

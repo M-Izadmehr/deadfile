@@ -26,6 +26,7 @@ class UsedAssets {
     this.exclude = argv.exclude; // excluded path
 
     this.currentFile = ""; // the current file which is getting parsed
+    this.notFound = new Set(); // list of files which could not be resolved
     this.sources = new Map(); // the list of all found sources with some data
     this.taskQueue = new Set(); // the list of files which should be read
     this.visited = new Set(); // the list of visited files
@@ -70,7 +71,7 @@ class UsedAssets {
         ? this.spinner.succeed(loggerMessage)
         : this.spinner.fail(loggerMessage);
 
-      this.onComplete(this.sources);
+      this.onComplete(this.sources, this.notFound);
     });
   }
 
@@ -94,7 +95,15 @@ class UsedAssets {
     // if relPath, does not have a value break
     if (!relPath) return;
     try {
-      const resolved = resolve(relPath, this.currentFile);
+      const { resolved, notFound } = resolve(relPath, this.currentFile) || {};
+      // if not found, add it to not found assets
+
+      if (notFound) {
+        this.notFound.add(notFound);
+        return;
+      }
+
+      // if resolved is null, break
       if (!resolved) return;
 
       // if this file is excluded ignore it

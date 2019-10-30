@@ -3,7 +3,7 @@ const enhancedResolve = require("enhanced-resolve");
 const { defaultParsableExtensions } = require("../models/Parsables");
 
 function checkNodeModules(absPath) {
-  return /node_modules/.test(absPath);
+  return /node_modules/.test(absPath) || absPath[0] === "/";
 }
 
 // by default resolve Parsable files even without .ext in import
@@ -19,15 +19,20 @@ const resolveSync = enhancedResolve.create.sync({
 function resolve(relPath = "", currentFile = "") {
   const currentDir = path.dirname(currentFile);
 
-  let resolved = {};
   try {
     const absPath = resolveSync(currentDir, relPath);
     const isNodeModule = checkNodeModules(absPath);
-    resolved = { absPath, isNodeModule };
+    const resolved = { absPath, isNodeModule };
+
+    return { resolved };
   } catch (err) {
-    return console.log(err.message);
+    if (!err.missing) return;
+    const notFound = checkNodeModules(relPath)
+      ? relPath
+      : path.resolve(currentDir, relPath);
+
+    return { notFound };
   }
-  return resolved;
 }
 
 module.exports = { resolve, checkNodeModules };

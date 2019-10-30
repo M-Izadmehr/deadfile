@@ -74,9 +74,21 @@ You can use `deadfile` for any JavaScript project, and go crazy with you code, u
 
 
 ### Options
-- **entry**: all arguments directly after `deadfile` are considered as entries (yes, deadfile supports multiple entries)
-- **dir**: set search in another folder
-- **exclude**: paths to ignore
+- **entry**: all arguments directly after `deadfile` are considered as entries (yes, deadfile supports multiple entries)        
+```bash
+deadfile ./src/index.js ./src/entry2.js
+```
+- **--dir**: set search in another folder:
+```bash
+deadfile <file> --dir /path/to/other/folder
+```
+- **--exclude**: list of paths to ignore:
+
+Paths or files to exclude from search. It supports any valid RegExp expression to exclude:
+```
+deadfile <file> --exclude ^(\w)png$
+deadfile <file> --exclude webpack utils docs
+```
 
 ## Todo
 * handle reassigned require

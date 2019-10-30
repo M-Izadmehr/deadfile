@@ -22,7 +22,7 @@ const options = {
   EXCL: {
     alias: "exclude",
     describe: "Exclude directories/files",
-    default: "",
+    default: [],
     type: "array",
     demandOption: false
   }

@@ -1,4 +1,6 @@
-# <img src="images/icon.png" alt="deadfile" width="35"/> deadfile
+<img src="https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/logo.png" alt="deadfile" width="100"/>
+
+# deadfile
 
 Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...).
 
@@ -6,7 +8,7 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 * Out of box support for ES5, ES6, React, Vue, ESM, CommonJs.
 * **Error tolerant:** deadfile uses loose parsing of your code, so if there are errors in your code, it still works. Even if you use some random babel config, it will parse your code and find imports.
 * **Syntax support:** it supports import/require and even dynamic import.
-* Shows you a warning for the node_modules you import, but do not appear in your package.json (for example, react in image below)
+* Shows you a warning for the node_modules you import, but do not appearing your package.json
 
 
 ![deadfile result](./images/screenshot.png "Code Analysis")
@@ -25,7 +27,7 @@ $ yarn global add deadfile
 ```
 **npx**
 ```bash
-$ npx install -g deadfile
+$ npx deadfile <file>
 ```
 
 ## Usage and Examples
@@ -72,9 +74,21 @@ You can use `deadfile` for any JavaScript project, and go crazy with you code, u
 
 
 ### Options
-- **entry**: all arguments directly after `deadfile` are considered as entries (yes, deadfile supports multiple entries)
-- **dir**: set search in another folder
-- **exclude**: paths to ignore
+- **entry**: all arguments directly after `deadfile` are considered as entries (yes, deadfile supports multiple entries)        
+```bash
+deadfile ./src/index.js ./src/entry2.js
+```
+- **--dir**: set search in another folder:
+```bash
+deadfile <file> --dir /path/to/other/folder
+```
+- **--exclude**: list of paths to ignore:
+
+Paths or files to exclude from search. It supports any valid RegExp expression to exclude:
+```
+deadfile <file> --exclude ^(\w)png$
+deadfile <file> --exclude webpack utils docs
+```
 
 ## Todo
 * handle reassigned require
