@@ -11,6 +11,7 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 * Shows you a warning for the node_modules you import, but do not appearin your package.json
 
 
+![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/analyzeresult.png "Code Analysis")
 ![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/screenshot.png "Code Analysis")
 
 

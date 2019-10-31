@@ -2,7 +2,54 @@ window.am4core.ready(async function() {
   const data = await (await fetch("api/data")).json();
   console.log("data: ", data);
   treemap(data);
+  pieChart(data);
+  unusedTable(data);
+});
 
+/**
+ * Display Table
+ * @param {*} data
+ */
+function unusedTable(data) {
+  const dateFormatter = date =>
+    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const tableBody = Object.keys(data.unusedAssets).map((file, index) => {
+    const fileName = file.split("/")[file.split("/").length - 1].split(".");
+    const ext = `.${fileName[fileName.length - 1]}`;
+    const lastModifiedTime = dateFormatter(
+      new Date(data.unusedAssets[file].mtime)
+    );
+    const createdTime = dateFormatter(new Date(data.unusedAssets[file].ctime));
+
+    return {
+      index: index + 1,
+      ext,
+      path: file,
+      createdTime,
+      lastModifiedTime
+    };
+  });
+
+  const template = file => `<tr>
+  <td>${file.index}</td>
+  <td>${file.ext}</td>
+  <td class="pathname">${file.path}</td>
+  <td class="date">${file.createdTime}</td>
+  <td class="date">${file.lastModifiedTime}</td>
+</tr>`;
+
+  tableBody.forEach(file =>
+    document
+      .querySelector("#unusedTable table tbody")
+      .insertAdjacentHTML("beforeend", template(file))
+  );
+}
+
+/**
+ * Display PieChart
+ * @param {*} data
+ */
+function pieChart(data) {
   // Themes begin
   window.am4core.useTheme(window.am4themes_animated);
   // Themes end
@@ -57,30 +104,6 @@ window.am4core.ready(async function() {
         }
       ]
     }
-    // {
-    //   category: "All imported assets by import type",
-    //   units: Object.keys(data.usedAssets).length,
-    //   pie: [
-    //     {
-    //       value: Object.values(data.usedAssets).filter(
-    //         ({ asyncImport, syncImport }) => asyncImport && !syncImport
-    //       ).length,
-    //       title: "Only with dynamic import"
-    //     },
-    //     {
-    //       value: Object.values(data.usedAssets).filter(
-    //         ({ asyncImport, syncImport }) => !asyncImport && syncImport
-    //       ).length,
-    //       title: "Only with sync import"
-    //     },
-    //     {
-    //       value: Object.values(data.usedAssets).filter(
-    //         ({ asyncImport, syncImport }) => asyncImport && syncImport
-    //       ).length,
-    //       title: "Both with sync and dynamic import"
-    //     }
-    //   ]
-    // }
   ];
 
   var chartData = [
@@ -132,16 +155,7 @@ window.am4core.ready(async function() {
   chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
   chart.data = chartData; // Add data
   setChartStyle(chart); // Add style
-
-  // Create chart instance for extension
-  // var chartByExtension = window.am4core.create(
-  //   "chartdivExt",
-  //   window.am4charts.XYChart
-  // );
-  // chartByExtension.hiddenState.properties.opacity = 0; // this creates initial fade-in
-  // chartByExtension.data = chartByExtensionData; // Add data
-  // setChartStyle(chartByExtension); // Add style
-}); // end window.am4core.ready()
+} // end window.am4core.ready()
 
 /**
  * Theme function
@@ -212,8 +226,24 @@ function setChartStyle(chart) {
   pieSeries.hiddenState.properties.endAngle = 270;
 }
 
+/**
+ * Display TreeMap
+ * @param {*} data
+ */
 function treemap(data) {
   window.am4core.ready(function() {
+    const usedProjectAssets = Object.values(data.usedAssets).filter(
+      file => !file.isNodeModule && file.importCount > 1
+    );
+    const usedNodeModules = Object.values(data.usedAssets).filter(
+      file => file.isNodeModule && file.importCount > 1
+    );
+
+    /**
+     * If there are no data break
+     */
+    if (usedProjectAssets.length < 2 && usedNodeModules.length < 2) return;
+
     // Themes begin
     window.am4core.useTheme(window.am4themes_animated);
     // Themes end
@@ -225,21 +255,17 @@ function treemap(data) {
     chart.data = [
       {
         name: "node_modules",
-        children: Object.values(data.usedAssets)
-          .filter(file => file.isNodeModule && file.importCount > 1)
-          .map(file => ({
-            name: file.absPath.replace(data.baseDir, ""),
-            value: file.importCount
-          }))
+        children: usedNodeModules.map(file => ({
+          name: file.absPath.replace(data.baseDir, ""),
+          value: file.importCount
+        }))
       },
       {
         name: "project",
-        children: Object.values(data.usedAssets)
-          .filter(file => !file.isNodeModule && file.importCount > 1)
-          .map(file => ({
-            name: file.absPath.replace(data.baseDir, ""),
-            value: file.importCount
-          }))
+        children: usedProjectAssets.map(file => ({
+          name: file.absPath.replace(data.baseDir, ""),
+          value: file.importCount
+        }))
       }
     ];
 

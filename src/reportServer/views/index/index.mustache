@@ -2,6 +2,7 @@
 <style>
 body {
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
 }
 #chartdiv, #chartdivExt {
   width: 100%;
@@ -12,17 +13,38 @@ body {
 <!-- Resources -->
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="table.css" rel="stylesheet">
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
 
 <!-- Chart code -->
 <script src="funnel.js"></script>
 
 <!-- HTML -->
 <br>
-<div id="chartdiv"></div>
+<div id="chartdiv">
+<h2>Dependency Analysis</h2>
+</div>
 <br>
+
+<div id="treemap">
+<h2>Imported files TreeMap</h2>
+</div>
 <br>
-<br>
-<br>
-<div id="treemap"></div>
+
+<div id="unusedTable">
+<div class="table-files">
+   <div class="header">Unused Assets</div>
+   
+   <table cellspacing="0">
+      <tr>
+        <th>index</th>
+        <th>Extension</th>
+        <th>Path</th>
+        <th>Date Created</th>
+        <th>Date Modified</th>
+      </tr>
+   </table>
+</div>
+</div>
