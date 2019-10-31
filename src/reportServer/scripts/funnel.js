@@ -1,6 +1,7 @@
 window.am4core.ready(async function() {
   const data = await (await fetch("api/data")).json();
   console.log("data: ", data);
+  treemap(data);
 
   // Themes begin
   window.am4core.useTheme(window.am4themes_animated);
@@ -122,7 +123,8 @@ window.am4core.ready(async function() {
           title: "imported from project"
         }
       ]
-    }
+    },
+    ...chartByExtensionData
   ];
 
   // Create chart instance
@@ -132,15 +134,19 @@ window.am4core.ready(async function() {
   setChartStyle(chart); // Add style
 
   // Create chart instance for extension
-  var chartByExtension = window.am4core.create(
-    "chartdivExt",
-    window.am4charts.XYChart
-  );
-  chartByExtension.hiddenState.properties.opacity = 0; // this creates initial fade-in
-  chartByExtension.data = chartByExtensionData; // Add data
-  setChartStyle(chartByExtension); // Add style
+  // var chartByExtension = window.am4core.create(
+  //   "chartdivExt",
+  //   window.am4charts.XYChart
+  // );
+  // chartByExtension.hiddenState.properties.opacity = 0; // this creates initial fade-in
+  // chartByExtension.data = chartByExtensionData; // Add data
+  // setChartStyle(chartByExtension); // Add style
 }); // end window.am4core.ready()
 
+/**
+ * Theme function
+ * @param {*} chart
+ */
 function setChartStyle(chart) {
   // Create axes
   var categoryAxis = chart.xAxes.push(new window.am4charts.CategoryAxis());
@@ -204,4 +210,78 @@ function setChartStyle(chart) {
 
   pieSeries.hiddenState.properties.startAngle = -90;
   pieSeries.hiddenState.properties.endAngle = 270;
+}
+
+function treemap(data) {
+  window.am4core.ready(function() {
+    // Themes begin
+    window.am4core.useTheme(window.am4themes_animated);
+    // Themes end
+
+    // create chart
+    var chart = window.am4core.create("treemap", window.am4charts.TreeMap);
+    chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+    chart.data = [
+      {
+        name: "node_modules",
+        children: Object.values(data.usedAssets)
+          .filter(file => file.isNodeModule && file.importCount > 1)
+          .map(file => ({
+            name: file.absPath.replace(data.baseDir, ""),
+            value: file.importCount
+          }))
+      },
+      {
+        name: "project",
+        children: Object.values(data.usedAssets)
+          .filter(file => !file.isNodeModule && file.importCount > 1)
+          .map(file => ({
+            name: file.absPath.replace(data.baseDir, ""),
+            value: file.importCount
+          }))
+      }
+    ];
+
+    chart.colors.step = 2;
+
+    // define data fields
+    chart.dataFields.value = "value";
+    chart.dataFields.name = "name";
+    chart.dataFields.children = "children";
+
+    chart.zoomable = false;
+    var bgColor = new window.am4core.InterfaceColorSet().getFor("background");
+
+    // level 0 series template
+    var level0SeriesTemplate = chart.seriesTemplates.create("0");
+    var level0ColumnTemplate = level0SeriesTemplate.columns.template;
+
+    level0ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
+    level0ColumnTemplate.fillOpacity = 0;
+    level0ColumnTemplate.strokeWidth = 4;
+    level0ColumnTemplate.strokeOpacity = 0;
+
+    // level 1 series template
+    var level1SeriesTemplate = chart.seriesTemplates.create("1");
+    var level1ColumnTemplate = level1SeriesTemplate.columns.template;
+
+    level1SeriesTemplate.tooltip.animationDuration = 0;
+    level1SeriesTemplate.strokeOpacity = 1;
+
+    level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
+    level1ColumnTemplate.fillOpacity = 1;
+    level1ColumnTemplate.strokeWidth = 4;
+    level1ColumnTemplate.stroke = bgColor;
+
+    var bullet1 = level1SeriesTemplate.bullets.push(
+      new window.am4charts.LabelBullet()
+    );
+    bullet1.locationY = 0.5;
+    bullet1.locationX = 0.5;
+    bullet1.label.text = "{name}";
+    bullet1.label.fill = window.am4core.color("#ffffff");
+
+    chart.maxLevels = 2;
+  }); // end am4core.ready()
 }

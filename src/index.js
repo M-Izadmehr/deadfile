@@ -81,7 +81,7 @@ class DeadFile {
   reporting(data) {
     Logger(data, this.baseDir);
     WriteReportFile(data, this.output);
-    ReportServer(data, this);
+    ReportServer(data, this.baseDir);
   }
 }
 

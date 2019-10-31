@@ -3,7 +3,7 @@ const opn = require("opn");
 const path = require("path");
 var mustacheExpress = require("mustache-express");
 
-function server(data) {
+function server(data, baseDir) {
   let serverListener;
   const PORT = 5976; // in scripts we use it to make api calls
 
@@ -20,7 +20,7 @@ function server(data) {
   });
 
   app.get("/api/data", (req, res) => {
-    res.json(data);
+    res.json({ ...data, baseDir });
     // close server after it gets data
     setTimeout(() => serverListener.close(), 100);
   });
