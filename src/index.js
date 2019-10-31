@@ -4,6 +4,7 @@ const Logger = require("./cli/Logger");
 const _pickBy = require("lodash/pickBy");
 const path = require("path");
 const WriteReportFile = require("./cli/WriteReportFile");
+const ReportServer = require("./reportServer/server");
 class DeadFile {
   constructor(argv) {
     const { _: entry, dir, exclude = [], output } = argv;
@@ -48,6 +49,10 @@ class DeadFile {
   }
 
   checkDiff() {
+    const usedAssets = [...this.usedAssets].reduce((acc, file) => {
+      acc[file[0]] = file[1];
+      return acc;
+    }, {});
     const unusedAssets = _pickBy(
       this.allAssets,
       (_, file) => !this.usedAssets.has(file)
@@ -63,8 +68,8 @@ class DeadFile {
 
     const data = {
       allAssets: this.allAssets,
-      usedAssets: this.usedAssets,
-      importedButNotFound: this.notFound,
+      usedAssets,
+      importedButNotFound: [...this.notFound],
       unusedAssets,
       importedNodeModules,
       importedButNotFoundInScope
@@ -76,6 +81,7 @@ class DeadFile {
   reporting(data) {
     Logger(data, this.baseDir);
     WriteReportFile(data, this.output);
+    ReportServer(data, this);
   }
 }
 
@@ -84,15 +90,15 @@ class DeadFile {
  */
 // const argv = {
 //   _: ["./example/ReactComponent.jsx"],
-//   dir: "./example"
-// _: [
-//   "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/index.js",
-//   "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/eligibility.js",
-//   "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/ie.js",
-//   "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/quote.js"
-// ],
-// dir: "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/",
-// exclude: [""]
+//   dir: "./example",
+//   _: [
+//     "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/index.js",
+//     "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/eligibility.js",
+//     "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/ie.js",
+//     "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/src/quote.js"
+//   ],
+//   dir: "/Users/mojtaba.izadmehr/Projects/meta-repo/ui/app/"
+//   // exclude: [""]
 // };
 
 // const response = new DeadFile(argv);

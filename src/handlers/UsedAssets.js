@@ -38,14 +38,14 @@ class UsedAssets {
 
   start() {
     this.spinner.start();
-    this.entry.forEach(entry => this.parseFile(entry));
+    this.parseFile();
   }
 
   /**
    * Find file, and parse it
    * @param {String} entry
    */
-  parseFile(entry) {
+  parseFile(entry = this.entry[0]) {
     fs.readFile(entry, "utf8", (err, file) => {
       if (err) {
         console.log("err: ", err.message);
@@ -66,6 +66,7 @@ class UsedAssets {
         const next = this.getNextTask(entry);
         return next && this.parseFile(next);
       }
+
       const loggerMessage = `${this.sources.size} imported assets found.`;
       this.sources.size
         ? this.spinner.succeed(loggerMessage)

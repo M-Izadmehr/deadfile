@@ -48,14 +48,16 @@ function logger(data, baseDir) {
     chalk.blue(tableBody.length) + chalk.red(" dead ") + "files found!"
   );
   console.log(
-    chalk.blue(usedAssets.size) + chalk.green(" imported ") + "files found!"
+    chalk.blue(Object.keys(usedAssets).length) +
+      chalk.green(" imported ") +
+      "files found!"
   );
   console.log(
     chalk.blue(importedNodeModules.length) +
       " separate imports from node_modules (and found in package.json)"
   );
   console.log(
-    chalk.blue(importedButNotFound.size) +
+    chalk.blue(importedButNotFound.length) +
       " assets imported but " +
       chalk.red("not found") +
       "."
