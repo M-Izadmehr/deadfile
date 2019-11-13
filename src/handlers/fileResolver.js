@@ -3,7 +3,7 @@ const enhancedResolve = require("enhanced-resolve");
 const { defaultParsableExtensions } = require("../models/Parsables");
 
 function checkNodeModules(absPath) {
-  return /node_modules/.test(absPath) || absPath[0] !== "/";
+  return /node_modules/.test(absPath) || (absPath[0] !== "/" && absPath[1] !== ':');
 }
 
 // by default resolve Parsable files even without .ext in import
