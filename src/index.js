@@ -7,15 +7,14 @@ const WriteReportFile = require("./cli/WriteReportFile");
 const ReportServer = require("./reportServer/server");
 class DeadFile {
   constructor(argv) {
-    const { _: entry, dir, exclude = [], output } = argv;
-
+    const { _: entry, dir, exclude = [], output, report } = argv;
     this.baseDir = this.dirToAbs(dir); // if dir is not absolute find based on pwd
     this.entry = this.entryToAbs(entry, dir); // if the entry is not absolute find the absolute
     this.exclude = exclude; // excluded files/folders
     this.output = output;
-
+    this.shouldReport = !(report == false);
     this.allAssets = AllAssets(dir, { exclude }); // Array
-
+    this.results = null;
     new UsedAssets(
       { entry: this.entry, dir: this.baseDir, exclude: this.exclude },
       this.setUsedAssets.bind(this)
@@ -75,7 +74,10 @@ class DeadFile {
       importedButNotFoundInScope
     };
 
-    this.reporting(data);
+    if (this.shouldReport) {
+      this.reporting(data);
+    }
+    this.results = data;
   }
 
   reporting(data) {
