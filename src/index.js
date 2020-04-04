@@ -7,12 +7,13 @@ const WriteReportFile = require("./cli/WriteReportFile");
 const ReportServer = require("./reportServer/server");
 class DeadFile {
   constructor(argv) {
-    const { _: entry, dir, exclude = [], output } = argv;
+    const { _: entry, dir, exclude = [], output, reportServer: shouldUseReportServer = true } = argv;
 
     this.baseDir = this.dirToAbs(dir); // if dir is not absolute find based on pwd
     this.entry = this.entryToAbs(entry, dir); // if the entry is not absolute find the absolute
     this.exclude = exclude; // excluded files/folders
     this.output = output;
+    this.shouldUseReportServer = shouldUseReportServer;
 
     this.allAssets = AllAssets(dir, { exclude }); // Array
 
@@ -81,7 +82,7 @@ class DeadFile {
   reporting(data) {
     Logger(data, this.baseDir);
     WriteReportFile(data, this.output);
-    ReportServer(data, this.baseDir);
+    if (this.shouldUseReportServer) ReportServer(data, this.baseDir);
   }
 }
 
