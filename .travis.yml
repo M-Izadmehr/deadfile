@@ -4,6 +4,6 @@ services:
   - docker
 
 import:
-  - .travis/node.yml
+#  - .travis/node.yml
   - .travis/node-versions.yml
   - .travis/semantic-release.yml
