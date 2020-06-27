@@ -13,9 +13,31 @@ const { ImportUsingExportKey } = require("../models/Types");
  * ```
  */
 function parseImportUsingExport() {
-  var node = this.startNode();
+  const node = this.startNode();
+
+  /**
+   * If it based on regex it has 'from' in the text, but the 'from' is not used as an import keyword:
+   * ```js
+   *  export function foo(from){ return from }
+   * ```
+   * it will fall in an infinite loop (this.tok.value === undefined), and instead of this.next() we should this.finishNode
+   * if there are no valid toks (undefined) for `maxRetry` retries, we should stop.
+   */
+  let previousValue = null;
+  let retryCount = 0;
+  const maxRetry = 50;
 
   while (this.tok.value !== "from") {
+    if (previousValue === this.tok.value && previousValue === undefined) {
+      retryCount++;
+      if (retryCount >= maxRetry) {
+        return null;
+      }
+    } else {
+      previousValue = this.tok.value;
+      retryCount = 0;
+    }
+
     this.next(); // skip `export` to find `from`
   }
   this.next(); // skip `from` to find `path`
@@ -39,7 +61,11 @@ function ParserExtension(Parser) {
 
       // check export from statements
       if (isImportUsingExport.call(this)) {
-        return parseImportUsingExport.call(this);
+        const parsed = parseImportUsingExport.call(this);
+        // if a proper import expression was found, use it.
+        if (parsed && parsed.source && parsed.source.value) {
+          return parsed;
+        }
       }
 
       return super.parseStatement(context, topLevel, exports);

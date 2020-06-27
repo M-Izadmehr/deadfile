@@ -1,12 +1,13 @@
 {
   "name": "deadfile",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...)",
   "main": "src/index.js",
   "homepage": "https://github.com/M-Izadmehr/deadfile",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "docsify serve ./docs"
+    "test": "jest",
+    "docs": "docsify serve ./docs",
+    "semantic-release": "semantic-release"
   },
   "bin": {
     "deadfile": "src/bin.js"
@@ -31,14 +32,17 @@
     "yargs": "^14.2.0"
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "^4.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
     "find-babel-config": "^1.2.0",
     "husky": "^3.0.9",
+    "jest": "^26.1.0",
     "lint-staged": "^9.4.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "semantic-release": "^17.1.1"
   },
   "husky": {
     "hooks": {
@@ -50,5 +54,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M-Izadmehr/deadfile.git"
   }
 }
