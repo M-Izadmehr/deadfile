@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "homepage": "https://github.com/M-Izadmehr/deadfile",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "docs": "docsify serve ./docs",
     "release": "",
     "semantic-release": "semantic-release"
@@ -38,6 +38,7 @@
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
+    "jest": "^26.1.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "semantic-release": "^17.1.1"
