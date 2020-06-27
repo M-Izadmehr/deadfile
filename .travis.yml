@@ -1,0 +1,8 @@
+version: ~> 1.0
+
+services:
+  - docker
+
+import:
+  - .travis/node.yml
+  - .travis/node-versions.yml
