@@ -25,7 +25,14 @@ const options = {
     default: [],
     type: "array",
     demandOption: false
-  }
+  },
+  RS: {
+    alias: "report-server",
+    describe: "Enable/disable the HTML report server",
+    default: true,
+    type: "boolean",
+    demandOption: false
+  },
 };
 
 module.exports = options;
