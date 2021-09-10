@@ -23,6 +23,10 @@ function checkBabelModuleResolver(filePath, currentFile) {
       }
     });
 
+    if (moduleResolverConfig == null) {
+      return filePath;
+    }
+
     const opts = moduleResolverConfig[1];
     const babelFileDirectory = path.dirname(loadedConfig.file);
     const rootDirectory = path.join(babelFileDirectory, opts.root[0]);

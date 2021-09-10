@@ -1,0 +1,8 @@
+{
+  "name": "test",
+  "author": "Mojtaba Izadmehr",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
