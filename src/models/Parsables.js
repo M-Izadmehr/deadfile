@@ -1,4 +1,4 @@
-const defaultParsableExtensions = [".js", ".jsx", ".ts", "tsx", ".vue"];
+const defaultParsableExtensions = [".js", ".jsx", ".ts", ".tsx", ".vue"];
 const excludedAssets = [
   // tests
   ".spec.js",
@@ -25,10 +25,10 @@ const excludedAssets = [
   ".log",
   ".properties",
   ".xml",
-  "browserlist"
+  "browserlist",
 ];
 
 module.exports = {
   defaultParsableExtensions,
-  excludedAssets
+  excludedAssets,
 };
