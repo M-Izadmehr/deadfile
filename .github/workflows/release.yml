@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.5.0"
+          node-version: "14.17.0"
       - run: yarn
       - run: yarn build --if-present
       - run: yarn test
