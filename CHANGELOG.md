@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/M-Izadmehr/deadfile/compare/v2.0.0...v2.0.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* fix tsx extension ([385fd16](https://github.com/M-Izadmehr/deadfile/commit/385fd1623d3126247b6e115698ea31123b7f7cdb))
+
 # [2.0.0](https://github.com/M-Izadmehr/deadfile/compare/v1.2.2...v2.0.0) (2022-06-22)
 
 
