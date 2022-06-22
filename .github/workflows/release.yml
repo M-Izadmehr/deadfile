@@ -15,7 +15,6 @@ jobs:
         with:
           node-version: "14.17.0"
       - run: yarn
-      - run: yarn build --if-present
       - run: yarn test
       - run: yarn semantic-release
         env:
