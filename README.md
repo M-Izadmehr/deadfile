@@ -14,6 +14,9 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 ![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/analyzeresult.png "Code Analysis")
 ![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/screenshot.png "Code Analysis")
 
+## Supported Node Versions
+This project uses optional chaining, so you need to use **Node v14.0 +** to be able to use it.
+
 
 ## Installation
 Install deadfile cli with the following command:
