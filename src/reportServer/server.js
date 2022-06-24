@@ -15,7 +15,7 @@ function server(data, baseDir) {
   app.use("/", express.static(path.join(__dirname, "scripts")));
 
   // respond with "hello world" when a GET request is made to the homepage
-  app.get("/", function(req, res) {
+  app.get("/", function (req, res) {
     res.render("index");
   });
 

@@ -15,7 +15,7 @@ function isParsable(source) {
   // TODO: handle logic for options parameters
   // TODO: be able to override node_modules
   const isCorrectFormat = defaultParsableExtensions.some(
-    ext => ext === source.extension
+    (ext) => ext === source.extension
   );
   return isCorrectFormat && !source.isNodeModule;
 }

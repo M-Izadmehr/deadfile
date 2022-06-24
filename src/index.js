@@ -26,7 +26,7 @@ class DeadFile {
   }
 
   entryToAbs(entry, baseDir) {
-    return entry.map(file => {
+    return entry.map((file) => {
       // Case 1: if entry is absolute use it
       if (path.isAbsolute(file)) return file;
       // Case 2: if entry is rel and baseDir is absolute, use baseDir as basis
@@ -58,12 +58,12 @@ class DeadFile {
     );
 
     const importedButNotFoundInScope = [...this.usedAssets]
-      .map(item => item[0])
-      .filter(file => !this.allAssets[file] && !/node_modules/.test(file));
+      .map((item) => item[0])
+      .filter((file) => !this.allAssets[file] && !/node_modules/.test(file));
 
     const importedNodeModules = [...this.usedAssets]
-      .map(item => item[0])
-      .filter(file => !this.allAssets[file] && /node_modules/.test(file));
+      .map((item) => item[0])
+      .filter((file) => !this.allAssets[file] && /node_modules/.test(file));
 
     const data = {
       allAssets: this.allAssets,
@@ -71,7 +71,7 @@ class DeadFile {
       importedButNotFound: [...this.notFound],
       unusedAssets,
       importedNodeModules,
-      importedButNotFoundInScope
+      importedButNotFoundInScope,
     };
 
     if (this.shouldReport) {

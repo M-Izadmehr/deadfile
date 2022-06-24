@@ -4,7 +4,7 @@ const { resolve } = require("./fileResolver");
 const isParsable = require("../ASTPlugins/isParsable");
 const {
   callExpressionHandler,
-  propertyHandler
+  propertyHandler,
 } = require("../ASTPlugins/isRequire");
 
 let { Parser, ParserWalk } = require("../ASTPlugins");
@@ -16,7 +16,7 @@ const {
   ImportExpression,
   ImportUsingExportKey,
   CallExpression,
-  Property
+  Property,
 } = require("../models/Types");
 
 class UsedAssets {
@@ -32,7 +32,7 @@ class UsedAssets {
     this.visited = new Set(); // the list of visited files
     this.onComplete = onComplete; // method called when process is finished
 
-    this.entry.forEach(entry => this.updateSources(entry));
+    this.entry.forEach((entry) => this.updateSources(entry));
     this.spinner = ora("Counting imported assets");
   }
 
@@ -58,7 +58,7 @@ class UsedAssets {
       this.spinner.text = `${this.sources.size} imported assets found. ${entry} `;
 
       ParserWalk.full(parsed, this.checkImports.bind(this), {
-        ...ParserWalk.base
+        ...ParserWalk.base,
       });
 
       // after completing a file, remove the file from taskList, and check next file
@@ -109,7 +109,7 @@ class UsedAssets {
 
       // if this file is excluded ignore it
       const isExcluded = this.exclude.some(
-        exc => exc && new RegExp(exc).test(resolved)
+        (exc) => exc && new RegExp(exc).test(resolved)
       );
       if (isExcluded) return;
 

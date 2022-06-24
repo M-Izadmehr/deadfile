@@ -23,9 +23,9 @@ const callExpressionHandler = (node = {}) => {
 
   const path =
     (node.arguments &&
-    node.arguments.length === 1 &&
-    node.arguments[0] &&
-    node.arguments[0].type === "Literal" && // Literal are string values (not variables)
+      node.arguments.length === 1 &&
+      node.arguments[0] &&
+      node.arguments[0].type === "Literal" && // Literal are string values (not variables)
       node.arguments[0].value) ||
     null;
 

@@ -12,7 +12,7 @@ function checkBabelModuleResolver(filePath, currentFile) {
   const loadedConfig = findBabelConfig.sync(currentFile);
   if (loadedConfig && loadedConfig.config && loadedConfig.config.plugins) {
     // find module-resolver configuration
-    const moduleResolverConfig = loadedConfig.config.plugins.find(element => {
+    const moduleResolverConfig = loadedConfig.config.plugins.find((element) => {
       if (Array.isArray(element)) {
         if (
           element[0] === "module-resolver" ||
@@ -33,7 +33,7 @@ function checkBabelModuleResolver(filePath, currentFile) {
     const aliasList = Object.fromEntries(
       Object.entries(opts.alias).map(([key, value]) => [
         key,
-        resolveSync(rootDirectory, value)
+        resolveSync(rootDirectory, value),
       ])
     );
 
@@ -42,7 +42,7 @@ function checkBabelModuleResolver(filePath, currentFile) {
 }
 // by default resolve Parsable files even without .ext in import
 const resolveSync = enhancedResolve.create.sync({
-  extensions: defaultParsableExtensions
+  extensions: defaultParsableExtensions,
 });
 
 /**

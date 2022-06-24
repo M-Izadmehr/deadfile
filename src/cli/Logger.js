@@ -10,7 +10,7 @@ function logger(data, baseDir) {
     usedAssets,
     importedNodeModules,
     importedButNotFound,
-    importedButNotFoundInScope
+    importedButNotFoundInScope,
   } = data;
   const tableBody = Object.keys(unusedAssets).map((file, index) => {
     const ext = path.extname(file);
@@ -28,9 +28,9 @@ function logger(data, baseDir) {
     columns: {
       2: {
         width: 40,
-        truncate: 100
-      }
-    }
+        truncate: 100,
+      },
+    },
   };
 
   const tableData = [header, ...tableBody];

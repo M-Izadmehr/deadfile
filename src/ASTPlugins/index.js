@@ -8,6 +8,6 @@ const injectImportUsingExportWalk = require("./walk");
 Parser = Parser.LooseParser.extend(parseImportFromExport);
 ParserWalk = injectImportUsingExportWalk(ParserWalk);
 
-const ParserWithJsx = entry => Parser.parse(parseJsx(entry));
+const ParserWithJsx = (entry) => Parser.parse(parseJsx(entry));
 
 module.exports = { Parser: ParserWithJsx, ParserWalk };

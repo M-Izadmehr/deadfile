@@ -14,7 +14,7 @@ Press --help for help.`;
       align: "center",
       borderStyle: "round",
       borderColor: "green",
-      backgroundColor: "#555555"
+      backgroundColor: "#555555",
     };
     const msgBox = boxen(greeting, boxenOptions);
 
