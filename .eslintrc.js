@@ -4,19 +4,19 @@ module.exports = {
     commonjs: true,
     browser: true,
     es6: true,
-    jest: true
+    jest: true,
   },
   plugins: ["prettier"],
   extends: ["eslint:recommended", "prettier"],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parserOptions: {
-    ecmaVersion: 2018,
-    "sourceType": "module"
+    ecmaVersion: 2021,
+    sourceType: "module",
   },
   rules: {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
   },
 };
