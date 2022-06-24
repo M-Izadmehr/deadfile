@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "docs": "docsify serve ./docs",
-    "lint": "eslint --fix --ext .js,.jsx .",
+    "eslint": "eslint --fix --ext .js,.jsx .",
     "semantic-release": "semantic-release"
   },
   "bin": {
