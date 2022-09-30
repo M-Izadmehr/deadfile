@@ -13,6 +13,18 @@ const options = {
     type: "string",
     demandOption: false,
   },
+  WPC: {
+    alias: "webpackConfig",
+    describe: "Webpack config file path",
+    type: "string",
+    demandOption: false,
+  },
+  PJ: {
+    alias: "packageJson",
+    describe: "package.json file path",
+    type: "string",
+    demandOption: false,
+  },
   O: {
     alias: "output",
     describe: "location to save report (./deadcode_report.js)",

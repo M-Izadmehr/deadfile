@@ -1,12 +1,26 @@
-<img src="https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/logo.png" alt="deadfile" width="100"/>
+<p align="center">
+  <a href="https://m-izadmehr.github.io/deadfile">
+    <img src="https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/logo.png" height="128">
+    <h1 align="center">deadfile</h1>
+  </a>
+</p>
 
-# deadfile
+<p align="center">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/deadfile">
+    <img alt="" src="https://img.shields.io/npm/v/deadfile.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <a aria-label="License" href="https://github.com/vercel/next.js/blob/canary/license.md">
+    <img alt="" src="https://img.shields.io/npm/l/next.svg?style=for-the-badge&labelColor=000000">
+  </a>
+</p>
+
 
 Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...).
 
-* **Easy to use**
-* Out of box support for ES5, ES6, React, Vue, ESM, CommonJs.
-* **Error tolerant:** deadfile uses loose parsing of your code, so if there are errors in your code, it still works. Even if you use some random babel config, it will parse your code and find imports.
+* **Easy to use**:
+Out of box support for ES5, ES6, React, Vue, ESM, CommonJs.
+* **Error tolerant:** deadfile uses loose parsing of your code, so if there are errors in your code, it still works. 
+Even if you use a very specific babel config, it will still parse your code and find imports.
 * **Syntax support:** it supports import/require and even dynamic import.
 * Shows you a warning for the node_modules you import, but do not appearin your package.json
 
@@ -102,10 +116,20 @@ deadfile <file> --output report.json
 ```
 
 
+## Supported Import Aliases
+### Babel
+### Webpack Import Alias 
+### Typescript Import Alias (`tsconfig.json`)
+
 ## Todo
-* handle reassigned require
-* look for dead declarations too
-* Add support AMD
+* IF local webpack config uses `process.cwd`, if you run the script in any other folder, it fill process.cwd to wrong value
+* Handle package.json aliases
+* refactor Deadfile class to async functions (easier to test)
+* Refactor parser/fileResolver into async functions or thread workers
+* Create interactive dependency graph of uses assets
+* Move project to TS
+* Unit test coverage on the pipeline
 * be able to include/exclude paths/extentions based on relPath/regex
 * allow file extensions for parsing, should default to (.js/.jsx/.ts/.tsx/.vue)
 * Add SASS import
+* 

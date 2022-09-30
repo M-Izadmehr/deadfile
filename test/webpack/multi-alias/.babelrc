@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./test/webpack/multi-alias/src"],
+      "alias": {
+        "fastify": "express",
+        "babelAlias": "./utils/babelAliasImport.js",
+        "missingBabelAlias": "./utils/missingBabelAlias.js"
+      }
+    }]
+  ]
+}

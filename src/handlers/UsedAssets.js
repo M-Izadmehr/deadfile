@@ -24,6 +24,8 @@ class UsedAssets {
     this.entry = argv.entry; // array of entry files
     this.baseDir = argv.dir; // the entry path, used as a base route to search all files
     this.exclude = argv.exclude; // excluded path
+    this.webpackConfig = argv.webpackConfig; // webpackConfig path
+    this.packageJson = argv.packageJson; // package.json path
 
     this.currentFile = ""; // the current file which is getting parsed
     this.notFound = new Set(); // list of files which could not be resolved
@@ -47,19 +49,18 @@ class UsedAssets {
    */
   parseFile(entry = this.entry[0]) {
     fs.readFile(entry, "utf8", (err, file) => {
-      if (err) {
-        console.log("err: ", err.message);
-        this.spinner.fail(err.message);
-        return;
+      if (!err) {
+        this.currentFile = entry;
+        const parsed = Parser(file);
+
+        this.spinner.text = `${this.sources.size} imported assets found. ${entry} `;
+
+        ParserWalk.full(parsed, this.checkImports.bind(this), {
+          ...ParserWalk.base,
+        });
+      } else if (err) {
+        this.notFound.add(entry);
       }
-      this.currentFile = entry;
-      const parsed = Parser(file);
-
-      this.spinner.text = `${this.sources.size} imported assets found. ${entry} `;
-
-      ParserWalk.full(parsed, this.checkImports.bind(this), {
-        ...ParserWalk.base,
-      });
 
       // after completing a file, remove the file from taskList, and check next file
       if (this.taskQueue.size > 1) {
@@ -96,7 +97,22 @@ class UsedAssets {
     // if relPath, does not have a value break
     if (!relPath) return;
     try {
-      const { resolved, notFound } = resolve(relPath, this.currentFile) || {};
+      const {
+        absPath,
+        notFound,
+        isWebpackAlias,
+        isNodeModuleAlias,
+        isBabelAlias,
+        isAbsoluteImport,
+        isNodeModule,
+      } =
+        resolve({
+          relPath,
+          currentFile: this.currentFile,
+          baseDir: this.baseDir,
+          webpackConfig: this.webpackConfig,
+          packageJson: this.packageJson,
+        }) || {};
       // if not found, add it to not found assets
 
       if (notFound) {
@@ -104,19 +120,25 @@ class UsedAssets {
         return;
       }
 
-      // if resolved is null, break
-      if (!resolved) return;
+      // if absPath resolved is null, break
+      if (!absPath) return;
 
       // if this file is excluded ignore it
       const isExcluded = this.exclude.some(
-        (exc) => exc && new RegExp(exc).test(resolved)
+        (exc) => exc && new RegExp(exc).test(absPath)
       );
       if (isExcluded) return;
 
-      const source =
-        this.sources.get(resolved.absPath) || new Source(this.baseDir);
-      source.setPath(resolved);
-      source.addImport(sync);
+      const source = this.sources.get(absPath) || new Source(this.baseDir);
+      source.setPath({ absPath });
+      source.addImport({
+        sync,
+        isWebpackAlias,
+        isNodeModuleAlias,
+        isBabelAlias,
+        isAbsoluteImport,
+        isNodeModule,
+      });
 
       // absPath should be used as a reference, because relPath can be duplicate
       this.sources.set(source.absPath, source);
@@ -137,9 +159,8 @@ class UsedAssets {
     switch (node.type) {
       case ImportUsingExportKey:
       case ImportExpression:
-        return this.updateSources(node.source.value, true);
       case ImportDeclaration:
-        return this.updateSources(node.source.value, false);
+        return this.updateSources(node.value || node.source.value, true);
       case CallExpression:
         return this.updateSources(callExpressionHandler(node), true);
       case Property:

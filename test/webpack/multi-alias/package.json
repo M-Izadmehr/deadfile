@@ -1,0 +1,11 @@
+{
+  "name": "webpack-module-alias",
+  "author": "Mojtaba Izadmehr",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "webpack": "4.46.0",
+    "react": "18.2.0",
+    "express": "^4.17.1"
+  }
+}

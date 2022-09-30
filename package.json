@@ -45,7 +45,9 @@
     "jest": "^26.1.0",
     "lint-staged": "^9.4.2",
     "prettier": "^2.7.1",
-    "semantic-release": "^19.0.3"
+    "semantic-release": "^19.0.3",
+    "terser-webpack-plugin": "^5.3.3",
+    "webpack4": "npm:webpack@^4"
   },
   "husky": {
     "hooks": {
