@@ -3,7 +3,7 @@ const options = {
     alias: "entry",
     describe: "Entry file (or array of entry files)",
     type: "array",
-    demandOption: true
+    demandOption: true,
   },
   D: {
     alias: "dir",
@@ -11,21 +11,26 @@ const options = {
     default: process.cwd(), //eslint-disable-line no-undef
     defaultDescription: "<PWD>",
     type: "string",
-    demandOption: false
+    demandOption: false,
   },
   O: {
     alias: "output",
     describe: "location to save report (./deadcode_report.js)",
     type: "string",
-    demandOption: false
+    demandOption: false,
   },
   EXCL: {
     alias: "exclude",
     describe: "Exclude directories/files",
     default: [],
     type: "array",
-    demandOption: false
-  }
+    demandOption: false,
+  },
+  ci: {
+    describe: "run in CI mode - the report server is disabled in CI",
+    type: "boolean",
+    demandOption: false,
+  },
 };
 
 module.exports = options;
