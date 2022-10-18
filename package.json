@@ -1,6 +1,6 @@
 {
   "name": "deadfile",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Simple util to find deadcode and unused files in any JavaScript project (ES5, ES6, React, Vue, ...)",
   "main": "src/index.js",
   "homepage": "https://github.com/M-Izadmehr/deadfile",

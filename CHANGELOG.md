@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/M-Izadmehr/deadfile/compare/v2.0.1...v2.0.2) (2022-10-18)
+
+
+### Bug Fixes
+
+* **docs:** fixes typo in README ([#59](https://github.com/M-Izadmehr/deadfile/issues/59)) ([7bab729](https://github.com/M-Izadmehr/deadfile/commit/7bab7293f0daf55c741ec7a832f6ca656736e9fa))
+
 ## [2.0.1](https://github.com/M-Izadmehr/deadfile/compare/v2.0.0...v2.0.1) (2022-06-22)
 
 
