@@ -55,6 +55,11 @@ with  exclude:
 deadfile ./src/index.js --exclude tests  utils/webpack
 ```
 
+without the report server or in CI scripts:
+```bash
+deadfile ./src/index.js --ci
+```
+
 ## What it does
 ### Supported Syntaxes
 All major ES Module imports are supported (including dynamic import):
