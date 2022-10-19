@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/M-Izadmehr/deadfile/compare/v2.0.2...v2.1.0) (2022-10-19)
+
+
+### Features
+
+* add --ci option ([#64](https://github.com/M-Izadmehr/deadfile/issues/64)) ([bd01c16](https://github.com/M-Izadmehr/deadfile/commit/bd01c16e6880b2c06956d70e706d217fe5f70e00))
+
 ## [2.0.2](https://github.com/M-Izadmehr/deadfile/compare/v2.0.1...v2.0.2) (2022-10-18)
 
 
