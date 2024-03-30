@@ -8,7 +8,7 @@ Simple util to find deadcode and unused files in any JavaScript project (ES5, ES
 * Out of box support for ES5, ES6, React, Vue, ESM, CommonJs.
 * **Error tolerant:** deadfile uses loose parsing of your code, so if there are errors in your code, it still works. Even if you use some random babel config, it will parse your code and find imports.
 * **Syntax support:** it supports import/require and even dynamic import.
-* Shows you a warning for the node_modules you import, but do not appearin your package.json
+* Shows you a warning for the node_modules you import, but do not appear in your package.json.
 
 
 ![deadfile result](https://github.com/M-Izadmehr/deadfile/raw/master/docs/images/analyzeresult.png "Code Analysis")
